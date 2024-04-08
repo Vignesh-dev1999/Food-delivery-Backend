@@ -20,13 +20,15 @@ exp.use(cors())
  exp.use("/r",apis)
  
  
+exp.get("/test",async (req,res)=>{
+    res.send("test api works.");
+})
 
 
 
 
 
-
-exp.listen (5000)
+exp.listen (process.env.port)
 
 
 
