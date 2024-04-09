@@ -1,9 +1,10 @@
 require("dotenv").config()
 const ex=require("express")
-const ser= require("./service/registrations")
-const api = require("./service/products")
-const apis = require("./service/restaurant")
-const alluser = require("./service/registrations")
+const user= require("./service/registrations")
+const products = require("./service/products")
+const restaurant = require("./service/restaurant")
+
+const biriyani = require("./service/products")
 require("./database/mongodb")
 const cors = require("cors")
 
@@ -16,15 +17,13 @@ exp.use(cors())
 
 
 
- exp.use("/",ser)
- exp.use("/p",api)
- exp.use("/r",apis)
- exp.use("/all",alluser)
+ exp.use("/user",user)
+ exp.use("/products",products)
+ exp.use("/restaurant",restaurant)
+ exp.use("/biriyani",biriyani)
+//  exp.use("/restaurant",restaurant)
  
  
-exp.get("/test",async (req,res)=>{
-    res.send("test api works.");
-})
 
 
 

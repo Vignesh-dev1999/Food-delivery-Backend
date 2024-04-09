@@ -13,4 +13,9 @@ exp.post("/",async(req,res)=>{
     res.send(result)
 })
 
+exp.get("/getallrestaurant", async(req,res)=>{
+    const result = await Restaurant.find().select({restaurant_Name:1,restaurant_location:1})
+    res.send(result)
+})
+
 module.exports = exp;
