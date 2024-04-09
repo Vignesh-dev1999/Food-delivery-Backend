@@ -31,8 +31,10 @@ exp.post("/log",async(req,res)=>{
      res.send(result)
 })
 
-// exp.getalluser =async (req, res)=>{
-//     const result = await Registration.find()
-//     res.send(result)
-// }
+
+
+exp.get("/all", async(req, res)=>{
+    const result = await Registration.find()
+    res.send(result)
+})
 module.exports = exp

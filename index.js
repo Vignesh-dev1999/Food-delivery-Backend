@@ -3,6 +3,7 @@ const ex=require("express")
 const ser= require("./service/registrations")
 const api = require("./service/products")
 const apis = require("./service/restaurant")
+const alluser = require("./service/registrations")
 require("./database/mongodb")
 const cors = require("cors")
 
@@ -18,6 +19,7 @@ exp.use(cors())
  exp.use("/",ser)
  exp.use("/p",api)
  exp.use("/r",apis)
+ exp.use("/all",alluser)
  
  
 exp.get("/test",async (req,res)=>{
