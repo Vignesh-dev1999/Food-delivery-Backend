@@ -1,40 +1,38 @@
 const Registration = require("../tables/register")
-const ex =require("express")
-const exp =ex.Router()
+const ex = require("express")
+const exp = ex.Router()
 const bcrypt = require("bcrypt")
 
-exp.post("/register",async(req,res)=>{
+exp.post("/register", async (req, res) => {
     const result = Registration({
-        name:req.body.name,
-        email:req.body.email,
-        password:req.body.password,
-        phonenumber:req.body.phonenumber,
-        address:req.body.address
-        
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        phonenumber: req.body.phonenumber,
+        address: req.body.address
+
     })
 
     const salt = await bcrypt.genSalt(2);
-    result.password= await bcrypt.hash(result.password, salt)
+    result.password = await bcrypt.hash(result.password, salt)
 
     await result.save()
     res.send(result)
 })
-exp.post("/login",async(req,res)=>{
-    const {email, password} = req.body;
-    const result = await Registration.findOne({email}).select({name:1,email:1,password:1,phonenumber:1})
-    if(!result) return res.send("User does not exist");
+exp.post("/login", async (req, res) => {
+    const { email, password } = req.body;
 
-    const validpassword = bcrypt.compare(password,result.password);
-    if(result.password != password){
-        return res.send("Password does not match");
+    const result = await Registration.findOne({ email }).select({ name: 1, email: 1, password: 1, phonenumber: 1,role:1 })
+    if (!result) return res.send("User does not exist");
+
+
+    let validpassword =  bcrypt.compareSync(password, result.password)
+    console.log(validpassword);
+    if (validpassword) {
+        return res.send({ result: "success",role: result.role});
     }
-     res.send(result)
+    return res.send("not suc")
 })
 
 
-
-exp.get("/getAllUSers", async(req, res)=>{
-    const result = await Registration.find()
-    res.send(result)
-})
 module.exports = exp
