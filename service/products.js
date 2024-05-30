@@ -20,6 +20,22 @@ ex.post("/addProduct",async(req,res)=>{
     res.send(result)
 })
 
+ex.post("/addAll",async(req,res)=>{
+
+    req.body.forEach(element => {
+        element.Restaurant_Name = "66067f17f3a7e64431e342d0"
+    });
+    const result = await Products.insertMany(req.body)
+   .then(() => {
+     console.log('Data inserted successfully');
+   })
+   .catch(err => {
+     console.error('Error inserting data:', err);
+   });
+ 
+     res.send(result)
+ })
+
 ex.get("/getAllProducts",async(req,res)=>{
     const  result =await Products.find().select({Product_Name:1,Product_Details:1,Product_Price:1,Product_Stack:1})
     res.send(result)
@@ -29,6 +45,10 @@ ex.get("/getByProductName/:category",async(req,res)=>{
     const result = await Products.find({Product_category:req.params.category}).select({Product_Name:1,Product_Details:1})
     res.send(result)
 })
-
+ex.get("/getByRestrantName/:id",async(req,res)=>{
+    const result = await Products.find({Restaurant_Name:req.params.id})
+    // console.log(result);
+    res.send(result)
+})
 
 module.exports = ex;

@@ -13,8 +13,20 @@ exp.post("/",async(req,res)=>{
     res.send(result)
 })
 
+exp.post("/addAll",async(req,res)=>{
+   const result = await Restaurant.insertMany(req.body)
+  .then(() => {
+    console.log('Data inserted successfully');
+  })
+  .catch(err => {
+    console.error('Error inserting data:', err);
+  });
+
+    res.send(result)
+})
+
 exp.get("/getallrestaurant", async(req,res)=>{
-    const result = await Restaurant.find().select({restaurant_Name:1,restaurant_location:1})
+    const result = await Restaurant.find()
     res.send(result)
 })
 

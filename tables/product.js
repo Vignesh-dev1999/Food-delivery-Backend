@@ -1,8 +1,9 @@
 const mongodb = require("mongoose")
+const { Schema, Types } = mongodb;
 
 const ProductSchema = new mongodb.Schema({
 
-    Restaurant_Name:String,
+    Restaurant_Name:{ type: Types.ObjectId, ref: 'Restaurant', required: true },
     Product_category:String,
     Product_subcategory:String,
     Product_Name:String,

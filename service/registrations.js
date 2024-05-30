@@ -24,7 +24,7 @@ exp.post("/login", async (req, res) => {
 
     const result = await Registration.findOne({ email }).select({ name: 1, email: 1, password: 1, phonenumber: 1,role:1 })
     if (!result) return res.send("User does not exist");
-
+ 
 
     let validpassword =  bcrypt.compareSync(password, result.password)
     console.log(validpassword);
@@ -32,6 +32,20 @@ exp.post("/login", async (req, res) => {
         return res.send({ result: "success",role: result.role});
     }
     return res.send("not suc")
+})
+
+exp.post("/sellerlogin", async(req,res)=>{
+    const { email, password } = req.body;
+
+    const result = await Registration.findOne({email}).select({name:1,email:1, password:1,phonenumber:1, role:1})
+    if(!result) return res.send("Your not seller");
+
+    let validdpassword = bcrypt.compareSync(password, result.password)
+    console.log(validdpassword);
+    if(validdpassword){
+        return res.send({result:"success",role:result.role});
+    }
+    return res.send("Your not seller")
 })
 
 
